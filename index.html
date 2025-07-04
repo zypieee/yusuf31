@@ -1,21 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-  <meta charset=\"UTF-8\">
-  <title>Başın Dönecek 😵</title>
+  <meta charset="UTF-8">
+  <title>Gizli Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: sans-serif;
-      text-align: center;
-      animation: spin 10s linear infinite;
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
+      font-size: 16px;
+      padding: 20px;
+      overflow: hidden;
     }
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    #terminal {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background-color: #00ff00;
+      animation: blink 0.7s steps(2, start) infinite;
+    }
+    @keyframes blink {
+      to { visibility: hidden; }
     }
   </style>
 </head>
 <body>
-  <h1>Bu sayfa dönüyor... 🌀</h1>
+  <div id="terminal"></div><div class="cursor"></div>
+
+  <script>
+    const terminal = document.getElementById("terminal");
+    const messages = [
+      "[İZİN YOK] Giriş denemesi algılandı...",
+      "Kök dizin taranıyor...",
+      "Dosyalar şifreleniyor...",
+      "Hedef: C:/Users/Kullanıcı/Masaüstü",
+      "Şifreleme tamamlandı ✅",
+      "Virüs: aktif 🎯",
+      "IP adresi bulundu: 192.168.1.42",
+      "Veriler gönderiliyor...",
+      "🟢 Transfer tamamlandı.",
+      "Tüm sistem erişimi sağlandı. ",
+      "Aka Spor Klubü,Antalya",
+      "bilgenin eve gidildi- virüs",
+      "ayispadani burdam osancez törminmti fivam",
+      "SELAM BEN BİLGE!"
+    ];
+
+    let i = 0;
+    function typeLine() {
+      if (i < messages.length) {
+        let line = messages[i];
+        let j = 0;
+        const interval = setInterval(() => {
+          terminal.textContent += line[j];
+          j++;
+          if (j === line.length) {
+            terminal.textContent += "\n";
+            clearInterval(interval);
+            i++;
+            setTimeout(typeLine, 600);
+          }
+        }, 50);
+      } else {
+        document.querySelector(".cursor").style.display = "none";
+      }
+    }
+
+    setTimeout(typeLine, 1000);
+  </script>
 </body>
 </html>
